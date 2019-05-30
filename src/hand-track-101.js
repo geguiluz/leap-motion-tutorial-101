@@ -7,7 +7,7 @@ function concatJointPosition(id, position){
 }
 
 var output = document.getElementById('output');
-var frameString = "", handString = '', fingerstring = "";
+var frameString = "", handString = '', fingerString = "";
 var hand, finger;
 var nameMap = ["thumb", "index", "middle", "ring", "pinky"];
 
@@ -32,9 +32,9 @@ Leap.loop(options, function(frame) {
         handString += "<br>";
 
         fingerString = '';
-        for (var j = 0, len = hand.fingers.length; j < len; j ++){
+        for (var j = 0, len2 = hand.fingers.length; j < len2; j ++){
             finger = hand.fingers[j];
-            fingerString = concatData("finger_type", finger.type, nameMap[finger.type]);
+            fingerString += concatData("finger_type", finger.type + ": " + nameMap[finger.type]);
             // The physical position of the distal interphalangeal joint of the finger. This point is the base of the distal bone (closest to the intermediate phalanx).
             fingerString += concatJointPosition('finger_dip', finger.dipPosition);
             // The physical position of the proximal interphalangeal joint of the finger. This position is the joint between the proximal and the intermediate phalanges.
@@ -44,9 +44,8 @@ Leap.loop(options, function(frame) {
             fingerString += "<br>";
         } 
 
-        fingerString += handString;
-        frameString += fingerstring;
+        frameString += handString;
+        frameString += fingerString;
     }
-    // frameString += handString;
     output.innerHTML = frameString;
 });
